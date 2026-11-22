@@ -23,5 +23,6 @@ After editing any summary: `python3 app/build.py`, then reload the page.
 
 ## Deploy
 
-Pushing to `master` publishes `app/` to GitHub Pages (`.github/workflows/pages.yml`).
+Hosted on Netlify (https://fromm-g3vg.netlify.app/, team-only access): every push to `master`
+publishes the `app/` folder, with no build command.
 The book text (`data/`, `chapters/`) is gitignored and is never published.
