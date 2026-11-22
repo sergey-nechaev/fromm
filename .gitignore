@@ -1,0 +1,5 @@
+# Copyrighted book text: never publish
+data/
+chapters/
+.DS_Store
+__pycache__/
