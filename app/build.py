@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Build app/data.js (the data the local study app reads) from summaries/*.json and app/book.json.
+"""Build app/data.js (the data the local study app reads) from summaries/*.json
+(chapters, people.json, events.json, concepts.json) and app/book.json.
 
 Usage: python3 app/build.py [--help]
 """
@@ -31,7 +32,13 @@ for o in order:
     else:
         print(f"missing: {f.name}", file=sys.stderr)
 book = json.loads((root / "app" / "book.json").read_text(encoding="utf-8"))
-data = {"order": order, "chapters": chapters, "book": book}
+people_file = root / "summaries" / "people.json"
+people = json.loads(people_file.read_text(encoding="utf-8")) if people_file.exists() else []
+events_file = root / "summaries" / "events.json"
+events = json.loads(events_file.read_text(encoding="utf-8")) if events_file.exists() else []
+concepts_file = root / "summaries" / "concepts.json"
+concepts = json.loads(concepts_file.read_text(encoding="utf-8")) if concepts_file.exists() else []
+data = {"order": order, "chapters": chapters, "book": book, "people": people, "events": events, "concepts": concepts}
 payload = json.dumps(data, ensure_ascii=False, indent=1)
 (root / "app" / "data.js").write_text("window.FROMM_DATA = " + payload + ";\n", encoding="utf-8")
 print(f"built app/data.js with {len(chapters)} chapters")
